@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uz" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Muvaffaqiyat</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+    body{
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:radial-gradient(circle at top,#0a2c14,#000);
+      color:#fff
+    }
+    .wrapper{
+      padding:3px;
+      border-radius:18px;
+      background:linear-gradient(120deg,#00ff88,#00c853,#00ff88);
+      background-size:400% 400%;
+      animation:borderMove 6s linear infinite
+    }
+    .card{
+      background:#0b1f14;
+      padding:40px;
+      border-radius:15px;
+      text-align:center;
+      width:420px
+    }
+    h2{margin-bottom:15px;color:#6bff9d}
+    p{margin:8px 0;color:#d8ffe8}
+    button{
+      margin-top:25px;
+      padding:12px 22px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      color:#fff;
+      background:linear-gradient(120deg,#00c6ff,#8a2be2)
+    }
+    button:hover{box-shadow:0 0 15px rgba(0,198,255,.9)}
+    @keyframes borderMove{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="card">
+    <h2>✅ Navbat muvaffaqiyatli olindi</h2>
+
+    <p><b>Foydalanuvchi:</b> <span th:text="${user.name}"></span></p>
+    <p><b>Passport:</b> <span th:text="${user.passport}"></span></p>
+
+    <hr style="margin:15px 0;opacity:.3">
+
+    <p><b>Shifokor:</b> <span th:text="${doctor}"></span></p>
+    <p><b>Sana:</b> <span th:text="${date}"></span></p>
+    <p><b>Tartib raqami:</b>  <samp th:text="${tartibraqami}"></samp> </p>
+
+    <!-- User ni yashirincha /main ga yuboramiz -->
+    <form th:action="@{/main}" method="get">
+      <input type="hidden" name="name" th:value="${user.name}">
+      <input type="hidden" name="passport" th:value="${user.passport}">
+      <button>Asosiy sahifa</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

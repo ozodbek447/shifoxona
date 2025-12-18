@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="uz" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Navbatlarim</title>
+
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+        body{
+            min-height:100vh;
+            display:flex;
+            background:radial-gradient(circle at top,#0a0f2c,#000);
+            color:#fff
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-wrapper{
+            padding:3px;
+            background:linear-gradient(270deg,#00c6ff,#8a2be2,#00c6ff);
+            background-size:600% 600%;
+            animation:borderMove 6s linear infinite
+        }
+        .sidebar{
+            width:260px;
+            background:#0b102a;
+            min-height:100vh;
+            padding:20px;
+            display:flex;
+            flex-direction:column;
+            gap:16px
+        }
+        .sidebar h2{text-align:center;margin-bottom:20px}
+
+        .menu-btn{
+            width:100%;
+            padding:18px;
+            font-size:18px;
+            border:none;
+            border-radius:14px;
+            cursor:pointer;
+            color:#fff;
+            background:linear-gradient(120deg,#00c6ff,#8a2be2)
+        }
+        .menu-btn:hover{box-shadow:0 0 18px rgba(0,198,255,.9)}
+
+        .user-info{
+            margin-top:auto;
+            font-size:14px;
+            color:#9fcbff;
+            border-top:1px solid #333;
+            padding-top:12px
+        }
+
+        /* ===== CONTENT ===== */
+        .content{
+            flex:1;
+            padding:40px;
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+            gap:20px;
+            align-content:start; /* MUHIM */
+        }
+
+
+        /* ===== NAVBAT CARD ===== */
+        .navbat-card-wrapper{
+            padding:3px;
+            border-radius:16px;
+            background:linear-gradient(120deg,#00c6ff,#8a2be2,#00c6ff);
+            background-size:400% 400%;
+            animation:borderMove 5s linear infinite;
+        }
+        .navbat-card{
+            background:#0b102a;
+            padding:14px;
+            border-radius:14px;
+            text-align:center;
+
+            display:flex;
+            flex-direction:column;
+            gap:6px;     /* elementlar yaqin */
+        }
+
+        .navbat-card h3{
+            margin-bottom:8px;
+            color:#9fcbff;
+            font-size:16px
+        }
+
+        .navbat-card p{
+            margin-bottom:6px;
+            font-size:14px
+        }
+
+        .navbat-number{
+            margin-top:10px;
+            font-size:20px;
+            font-weight:bold;
+            color:#00c6ff
+        }
+
+        /* ===== DELETE BUTTON ===== */
+        .delete-btn{
+            margin-top:12px;
+            padding:8px;
+            width:100%;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            font-size:14px;
+            color:#fff;
+            background:linear-gradient(120deg,#ff4b2b,#ff416c)
+        }
+        .delete-btn:hover{
+            box-shadow:0 0 12px rgba(255,75,43,.9)
+        }
+
+        @keyframes borderMove{
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<div class="sidebar-wrapper">
+    <div class="sidebar">
+
+        <h2>BORSA KELMAS</h2>
+
+        <form action="/main2" method="get">
+            <input type="hidden" name="passport" th:value="${user.passport}">
+            <button class="menu-btn">Asosiy</button>
+        </form>
+
+<!--        <form action="/batafsil" method="get">-->
+<!--            <input type="hidden" name="passport" th:value="${user.passport}">-->
+<!--            <button class="menu-btn">Batafsil</button>-->
+<!--        </form>-->
+
+        <form action="/navbat" method="get">
+            <input type="hidden" name="passport" th:value="${user.passport}">
+            <button class="menu-btn">Navbatlarim</button>
+        </form>
+
+        <!-- USER INFO -->
+        <div class="user-info">
+            <p><b>Ism:</b> <span th:text="${user.name}"></span></p>
+            <p><b>Passport:</b> <span th:text="${user.passport}"></span></p>
+            <p><b>Yosh:</b> <span th:text="${user.age}"></span></p>
+        </div>
+
+    </div>
+</div>
+
+<!-- ===== NAVBATLAR ===== -->
+<div class="content">
+
+    <div th:each="n : ${navbat}" class="navbat-card-wrapper">
+        <div class="navbat-card">
+
+            <h3 th:text="${n.doctor}">Doctor</h3>
+            <p>📅 Sana: <span th:text="${n.date}"></span></p>
+
+            <div class="navbat-number">
+                № <span th:text="${n.navbatRaqami}"></span>
+            </div>
+
+            <!-- ❌ O‘CHIRISH -->
+            <form action="/navbat/delete" method="post"
+                  onsubmit="return confirm('Navbatni o‘chirishni xohlaysizmi?')">
+
+                <input type="hidden" name="navbatId" th:value="${n.id}">
+                <input type="hidden" name="passport" th:value="${user.passport}">
+
+                <button type="submit" class="delete-btn">❌ O‘chirish</button>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

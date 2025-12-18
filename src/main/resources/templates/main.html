@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="uz" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Asosiy sahifa</title>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{min-height:100vh;display:flex;background:radial-gradient(circle at top,#0a0f2c,#000);color:#fff}
+
+    /* ===== SIDEBAR ===== */
+    .sidebar-wrapper{
+      padding:3px;
+      background:linear-gradient(270deg,#00c6ff,#8a2be2,#00c6ff);
+      background-size:600% 600%;
+      animation:borderMove 6s linear infinite
+    }
+    .sidebar{
+      width:260px;
+      background:#0b102a;
+      min-height:100vh;
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      gap:16px
+    }
+    .sidebar h2{text-align:center;margin-bottom:20px}
+
+    /* MENU BUTTONS (KATTAROQ) */
+    .menu-btn{
+      width:100%;
+      padding:18px;               /* 👈 2 barobar kattaroq */
+      font-size:18px;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      color:#fff;
+      background:linear-gradient(120deg,#00c6ff,#8a2be2)
+    }
+    .menu-btn:hover{
+      box-shadow:0 0 18px rgba(0,198,255,.9)
+    }
+
+    .user-info{
+      margin-top:auto;
+      font-size:14px;
+      color:#9fcbff;
+      border-top:1px solid #333;
+      padding-top:12px
+    }
+
+    /* ===== CONTENT ===== */
+    .content{flex:1;padding:40px}
+    .card-wrapper{
+      padding:3px;
+      max-width:520px;
+      margin:auto;
+      border-radius:18px;
+      background:linear-gradient(120deg,#00c6ff,#8a2be2,#00c6ff);
+      background-size:400% 400%;
+      animation:borderMove 5s linear infinite
+    }
+    .card{
+      background:#0b102a;
+      padding:30px;
+      border-radius:15px
+    }
+
+    .input-box{margin-bottom:18px}
+    .input-box label{
+      display:block;
+      margin-bottom:6px;
+      color:#9fcbff
+    }
+    .input-box input{
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      border:2px solid transparent;
+      background-image:
+              linear-gradient(#0b102a,#0b102a),
+              linear-gradient(120deg,#00c6ff,#8a2be2);
+      background-origin:border-box;
+      background-clip:padding-box,border-box;
+      color:#fff
+    }
+
+    /* DOCTOR */
+    .doctor{
+      padding:12px;
+      margin-bottom:8px;
+      border-radius:10px;
+      background:linear-gradient(120deg,#00c6ff,#8a2be2);
+      cursor:pointer;
+      transition:.2s
+    }
+    .doctor:hover{
+      transform:scale(1.03);
+      box-shadow:0 0 10px rgba(0,198,255,.8)
+    }
+
+    @keyframes borderMove{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<div class="sidebar-wrapper">
+  <div class="sidebar">
+
+    <h2>BORSA KELMAS</h2>
+    <H2>shifoxonasi</H2>
+
+    <form action="/main2" method="get">
+      <input type="hidden" name="passport" th:value="${user.passport}">
+      <button class="menu-btn">Asosiy</button>
+    </form>
+
+<!--    <form action="/batafsil" method="get">-->
+<!--      <input type="hidden" name="passport" th:value="${user.passport}">-->
+<!--      <button class="menu-btn">Batafsil</button>-->
+<!--    </form>-->
+
+    <!-- 🆕 NAVBATLARIM -->
+    <form action="/navbat" method="get">
+      <input type="hidden" name="passport" th:value="${user.passport}">
+      <button class="menu-btn">Navbatlarim</button>
+    </form>
+
+
+    <!-- USER INFO -->
+    <div class="user-info">
+      <p><b>Ism:</b> <span th:text="${user.name}"></span></p>
+      <p><b>Passport:</b> <span th:text="${user.passport}"></span></p>
+      <p><b>Yosh:</b> <span th:text="${user.age}"></span></p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== CONTENT ===== -->
+<div class="content">
+  <div class="card-wrapper">
+    <div class="card">
+
+      <!-- 🆕 NAVBAT OLISH -->
+      <form action="/navbatOlish" method="post">
+
+        <!-- DOCTOR -->
+        <div class="input-box">
+          <label>Doctorlar</label>
+          <input type="hidden" name="doctor" id="doctorInput" required>
+
+          <div th:each="d : ${doctors}"
+               class="doctor"
+               th:text="${d}"
+               th:attr="data-name=${d}"
+               onclick="selectDoctor(this)">
+          </div>
+
+        </div>
+
+        <!-- DATE -->
+        <div class="input-box">
+          <label>Sana</label>
+          <input type="date" name="date" required>
+        </div>
+
+        <!-- PASSPORT -->
+        <div class="input-box">
+          <label>Passport</label>
+          <input type="text"
+                 name="passport"
+                 th:value="${user.passport}"
+                 readonly>
+        </div>
+
+        <button class="menu-btn" type="submit">Navbat olish</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function selectDoctor(el){
+    const name = el.getAttribute("data-name");
+    document.getElementById("doctorInput").value = name;
+    alert("Tanlandi: " + name);
+  }
+
+</script>
+
+</body>
+</html>

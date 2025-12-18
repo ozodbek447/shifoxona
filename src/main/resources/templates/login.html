@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registratsiya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top, #0a0f2c, #000);
+        }
+
+        /* Tashqi animatsiyali ramka */
+        .wrapper {
+            position: relative;
+            padding: 3px;
+            border-radius: 20px;
+            background: linear-gradient(270deg, #00c6ff, #8a2be2, #00c6ff);
+            background-size: 600% 600%;
+            animation: borderMove 6s linear infinite;
+        }
+
+        @keyframes borderMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Ichki forma */
+        .form-box {
+            width: 360px;
+            padding: 30px;
+            border-radius: 17px;
+            background: #0b102a;
+            color: #fff;
+        }
+
+        .form-box h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        /* Inputlar */
+        .input-box {
+            position: relative;
+            margin-bottom: 22px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: transparent;
+            color: #fff;
+            border: 2px solid transparent;
+            outline: none;
+            font-size: 15px;
+            background-image:
+                    linear-gradient(#0b102a, #0b102a),
+                    linear-gradient(120deg, #00c6ff, #8a2be2);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            transition: box-shadow 0.3s;
+        }
+
+        .input-box input:focus {
+            box-shadow: 0 0 12px rgba(138, 43, 226, 0.9);
+        }
+
+        .input-box label {
+            position: absolute;
+            top: -9px;
+            left: 12px;
+            font-size: 12px;
+            padding: 0 6px;
+            background: #0b102a;
+            color: #9fcbff;
+        }
+
+        /* Tugma */
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(120deg, #00c6ff, #8a2be2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 198, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="form-box">
+        <h2>login</h2>
+
+        <form action="/tastiqlash" method="post">
+
+            <div class="input-box">
+                <label>Pasport raqami</label>
+                <input type="text" name="passport" placeholder="AA1234567" required />
+            </div>
+
+            <div class="input-box">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Parolni kiriting" required />
+            </div>
+
+            <button type="submit">login</button>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

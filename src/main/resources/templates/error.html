@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uz" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Xatolik</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+        body{
+            height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:radial-gradient(circle at top,#2c0a0a,#000);
+            color:#fff
+        }
+        .wrapper{
+            padding:3px;
+            border-radius:18px;
+            background:linear-gradient(120deg,#ff0000,#ff6b6b,#ff0000);
+            background-size:400% 400%;
+            animation:borderMove 6s linear infinite
+        }
+        .card{
+            background:#200909;
+            padding:40px;
+            border-radius:15px;
+            text-align:center;
+            width:380px
+        }
+        h2{margin-bottom:15px;color:#ff7b7b}
+        p{margin-bottom:25px;color:#ffdede}
+        button{
+            padding:12px 22px;
+            border:none;
+            border-radius:12px;
+            cursor:pointer;
+            color:#fff;
+            background:linear-gradient(120deg,#ff416c,#ff4b2b)
+        }
+        button:hover{box-shadow:0 0 15px rgba(255,75,75,.9)}
+        @keyframes borderMove{
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="card">
+        <h2>❌ Xatolik yuz berdi</h2>
+
+        <p th:text="${errorMessage}">
+            Noma'lum xatolik
+        </p>
+
+        <!-- Asosiy sahifaga qaytish -->
+        <form th:action="@{/main2}" method="get">
+            <input type="hidden" name="passport" th:value="${user.passport}">
+            <button>Asosiy sahifa</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
