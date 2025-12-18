@@ -79,6 +79,7 @@ public class MainController {
             model.addAttribute("errorMessage","vaqtni togri kitittinggiz");
             return "error";
         }
+
         if (apiResponse.isSuccess()) {
             int id=1;
             navbat.setNavbatRaqami(server.navbatBerish(navbat));
