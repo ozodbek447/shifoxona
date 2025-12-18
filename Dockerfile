@@ -1,15 +1,13 @@
-# 1️⃣ Base image sifatida OpenJDK 17 ni ishlatamiz
+# 1️⃣ Build stage (Maven bilan jar yig‘amiz)
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /build
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# 2️⃣ Run stage (faqat jarni ishga tushiramiz)
 FROM eclipse-temurin:17-jdk-jammy
-
-# 2️⃣ Ishchi katalog yaratamiz va unga o‘tib olamiz
 WORKDIR /app
-
-# 3️⃣ Maven build natijasidagi jar faylni konteynerga nusxalaymiz
-#    Target katalogida build qilingani faraz qilinadi
-COPY target/sunnatAkaWebSatt-0.0.1-SNAPSHOT.jar app.jar
-
-# 4️⃣ Portni ochamiz (agar Spring Boot default 8080 bo‘lsa)
+COPY --from=build /build/target/*.jar app.jar
 EXPOSE 8080
-
-# 5️⃣ Spring Boot jar faylini ishga tushirish
 ENTRYPOINT ["java","-jar","app.jar"]
